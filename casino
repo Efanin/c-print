@@ -1,0 +1,152 @@
+#include <iostream>
+#include <windows.h>
+#include <string>
+using namespace std;
+
+#pragma region Print
+
+enum ConsoleColor
+{
+    black = 0,
+    blue = 1,
+    green = 2,
+    cyan = 3,
+    red = 4,
+    magenta = 5,
+    brown = 6,
+    lightGray = 7,
+    darkGray = 8,
+    lightBlue = 9,
+    lightGreen = 10,
+    lightCyan = 11,
+    lightRed = 12,
+    lightMagenta = 13,
+    yellow = 14,
+    white = 15
+};
+
+void print(string text = " ", int x = 0, int y = 0, ConsoleColor text_color = white, ConsoleColor background = black)
+{
+    HANDLE handle;
+    COORD coordinates;
+    handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    coordinates.X = x;
+    coordinates.Y = y;
+    SetConsoleCursorPosition(handle, coordinates);
+    SetConsoleTextAttribute(handle, (WORD)((background << 4) | text_color));
+    cout << text;
+
+}
+void print(int x = 0, int y = 0, ConsoleColor background = black)
+{
+    print(" ", x, y, background, background);
+}
+#pragma endregion Print
+
+int main()
+{
+    setlocale(0, "");
+#pragma region Arrays
+    int circle[][2] = {
+        {11,9},
+        {12,9},
+        {13,9},
+        {14,10},
+        {15,10},
+        {16,10},
+        {17,11},
+        {18,12},
+        {18,13},
+        {19,14},
+        {19,15},
+        {19,16},
+
+        {18,17},
+
+        {18,18},
+        {17,19},
+
+        {16,20},
+        {15,20},
+        {14,20},
+
+        {13,21},
+        {12,21},
+        {11,21},
+        {10,20},
+        {9,20},
+        {8,20},
+        {6,18},
+
+        {7,19},
+        {6,17},
+
+        {5,14},
+        {5,15},
+        {5,16},
+
+        {6,13},
+        {6,12},
+
+        {7,11},
+        {8,10},
+        {9,10},
+        {10,10}
+    };
+    string cells[] = { "00z","01r","02b","03r","04b","05r","06b", "07r", "08b","09r","10b", "11b","12r","13b", "14r", "15b","16r","17b","18r","19r","20b","21r","22b","23r","24b","25r","26b","27r","28b","29b","30r","31b","32r","33b","34r","35b","36r" };
+#pragma endregion Arrays
+
+
+#pragma region Draw
+    for (size_t i = 0; i < 40; i++)
+    {
+        for (size_t j = 0; j < 100; j++)
+        {
+            print(j, i, lightGreen);
+        }
+    }
+    
+    for (size_t i = 10; i < 10 + 11; i++)
+    {
+        for (size_t j = 8; j < 8 + 9; j++)
+        {
+            print(j, i, brown);
+        }
+    }
+    for (size_t i = 12; i < 12 + 7; i++)
+    {
+        for (size_t j = 6; j < 6 + 13; j++)
+        {
+            print(j, i, brown);
+        }
+    }
+
+    for (size_t i = 0; i < size(circle); i++)
+    {
+        print(circle[i][0], circle[i][1], black);
+    }
+
+    for (size_t i = 5; i < 25; i++)
+    {
+        for (size_t j = 30; j < 95; j++)
+        {
+            print(j, i, black);
+        }
+    }
+    for (size_t i = 6; i < 6+9; i++)
+    {
+        for (size_t j = 31; j < 31 + 5; j++)
+        {
+            print(j, i, green);
+        }
+    }
+
+#pragma endregion Draw
+
+
+
+
+
+    int x;
+    cin >> x;
+}
