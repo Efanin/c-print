@@ -54,7 +54,8 @@ void box(int x, int y, int width, int height, ConsoleColor color)
         }
     }
 }
-void anim_roulet(string cells[]) {
+string anim_roulet(string cells[]) {
+    string res;
     for (size_t i = 1; i < 30; i++)
     {
         int rnd = rand() % 37;
@@ -76,7 +77,9 @@ void anim_roulet(string cells[]) {
             print(to_string(rnd), 10 + s, 14 + 1, white, green);
         }
         Sleep(10 * i);
+        res = cells[rnd];
     }
+    return res;
 }
 
 int main()
@@ -224,8 +227,51 @@ int main()
 
 #pragma region Game
     srand(time(NULL));
-    anim_roulet(cells);
+    int money = 10000;
+    string bet;
+    int bet_money;
+    string set;
 
+    while (money > 0) {
+        print("                           ", 30, 30, lightGreen, lightGreen);
+        print("Money: " + to_string(money) + "$", 30, 30, white, black);
+        print("Bet $       ", 30, 32, white, black);
+        print("Set         ", 30, 34, white, black);
+        print(" ", 36, 32, white, black);
+        getline(cin, bet);
+        try
+        {
+            bet_money = stoi(bet);
+        }
+        catch (exception ex)
+        {
+            return 1;
+        }
+        print(" ", 36, 34, white, black);
+        getline(cin, set);
+        money -= bet_money;
+        print("                           ", 30, 30, lightGreen, lightGreen);
+        print("Money: " + to_string(money) + "$", 30, 30, white, black);
+        string res = anim_roulet(cells);
+        int num_set;
+        try {
+            num_set = stoi(set);
+            if (stoi(res.substr(0, 2)) == num_set) {
+                money += bet_money * 36;
+            }
+        }
+        catch (exception ex)
+        {
+            if (set == "red" && res[2] == 'r') {
+                money += bet_money * 2;
+            }
+            if (set == "black" && res[2] == 'b') {
+                money += bet_money * 2;
+            }
+        }
+    }
+    print("                           ", 30, 30, lightGreen, lightGreen);
+    print("GAME OVER", 30, 30, white, black);
 
 
 #pragma endregion Game
