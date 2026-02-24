@@ -43,6 +43,42 @@ void print(int x = 0, int y = 0, ConsoleColor background = black)
 }
 #pragma endregion Print
 
+
+void box(int x, int y, int width, int height, ConsoleColor color)
+{
+    for (size_t i = y; i < y + height; i++)
+    {
+        for (size_t j = x; j < x + width; j++)
+        {
+            print(j, i, color);
+        }
+    }
+}
+void anim_roulet(string cells[]) {
+    for (size_t i = 1; i < 30; i++)
+    {
+        int rnd = rand() % 37;
+        int s = 1;
+        if (rnd < 10) s = 2;
+        if (cells[rnd][2] == 'b')
+        {
+            box(10, 14, 5, 3, black);
+            print(to_string(rnd), 10 + s, 14 + 1, white, black);
+        }
+        if (cells[rnd][2] == 'r')
+        {
+            box(10, 14, 5, 3, red);
+            print(to_string(rnd), 10 + s, 14 + 1, white, red);
+        }
+        if (cells[rnd][2] == 'z')
+        {
+            box(10, 14, 5, 3, green);
+            print(to_string(rnd), 10 + s, 14 + 1, white, green);
+        }
+        Sleep(10 * i);
+    }
+}
+
 int main()
 {
     setlocale(0, "");
@@ -126,27 +162,73 @@ int main()
         print(circle[i][0], circle[i][1], black);
     }
 
-    for (size_t i = 5; i < 25; i++)
-    {
-        for (size_t j = 30; j < 95; j++)
-        {
-            print(j, i, black);
-        }
-    }
-    for (size_t i = 6; i < 6+9; i++)
-    {
-        for (size_t j = 31; j < 31 + 5; j++)
-        {
-            print(j, i, green);
-        }
-    }
 
+    box(30, 5, 67, 23, darkGray);
+    box(30, 28, 67, 1, brown);
+    box(31, 6, 5, 9, green);
+    print("0", 33, 10, white, green);
+    for (size_t j = 36, k = 1; j < 12 * 5 + 36; j += 5)
+    {
+        for (size_t i = 3 + 9; i > 3; i -= 3, k++)
+        {
+            int num = stoi(cells[k].substr(0, 2));
+            int s = 1;
+            if (num < 10) s = 2;
+            if (cells[k][2] == 'r')
+            {
+                box(j, i, 5, 3, red);
+                print(to_string(num), j+s, i+1, white, red);
+            }
+            if (cells[k][2] == 'b')
+            {
+                box(j, i, 5, 3, black);
+                print(to_string(num), j+s, i+1, white, black);
+            } 
+        }
+    }
+    box(37, 16, 18, 5, lightGray);
+    print("1 ST 12", 42, 18, black, lightGray);
+
+    box(57, 16, 18, 5, lightGray);
+    print("2 ND 12", 62, 18, black, lightGray);
+
+    box(77, 16, 18, 5, lightGray);
+    print("3 RD 12", 82, 18, black, lightGray);
+
+    box(37, 22, 9, 5, lightGray);
+    print("1 TO 18", 38, 24, black, lightGray);
+
+    box(47, 22, 8, 5, lightGray);
+    print("EVEN", 49, 24, black, lightGray);
+
+    box(57, 22, 8, 5, red);
+    print(" RED ", 58, 24, white, red);
+
+    box(66, 22, 9, 5, black);
+    print("BLACK", 68, 24, white, black);
+
+    box(77, 22, 9, 5, lightGray);
+    print("ODD", 80, 24, black, lightGray);
+
+    box(87, 22, 8, 5, lightGray);
+    print("19 TO 36", 87, 24, black, lightGray);
+
+    box(32, 18, 3, 3, lightRed);
+    box(32, 18, 3, 2, lightMagenta);
+    box(32, 18, 3, 1, magenta);
+
+    box(32, 22, 3, 3, lightBlue);
+    box(32, 22, 3, 2, lightMagenta);
+    box(32, 22, 3, 1, magenta);
 #pragma endregion Draw
 
+#pragma region Game
+    srand(time(NULL));
+    anim_roulet(cells);
 
 
 
-
+#pragma endregion Game
     int x;
     cin >> x;
 }
