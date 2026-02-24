@@ -1,6 +1,8 @@
 #include <iostream>
 #include <windows.h>
 #include <string>
+#include <algorithm>
+
 using namespace std;
 
 #pragma region Print
@@ -25,6 +27,12 @@ enum ConsoleColor
     white = 15
 };
 
+string str_tolower(string s)
+{
+    transform(s.begin(), s.end(), s.begin(),
+        [](unsigned char c) { return tolower(c); });
+    return s;
+}
 void print(string text = " ", int x = 0, int y = 0, ConsoleColor text_color = white, ConsoleColor background = black)
 {
     HANDLE handle;
@@ -262,10 +270,10 @@ int main()
         }
         catch (exception ex)
         {
-            if (set == "red" && res[2] == 'r') {
+            if (str_tolower(set) == "red" && res[2] == 'r') {
                 money += bet_money * 2;
             }
-            if (set == "black" && res[2] == 'b') {
+            if (str_tolower(set) == "black" && res[2] == 'b') {
                 money += bet_money * 2;
             }
         }
